@@ -9,7 +9,9 @@ class DvdLogoService : WallpaperService() {
 
     override fun onCreateEngine(): Engine {
         context = this
-        TODO("Implement engine")
+        return DvdLogoEngine()
     }
+
+    inner class DvdLogoEngine : Engine()
 
 }
