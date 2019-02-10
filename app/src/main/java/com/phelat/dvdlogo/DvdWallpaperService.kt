@@ -3,7 +3,7 @@ package com.phelat.dvdlogo
 import android.content.Context
 import android.service.wallpaper.WallpaperService
 
-class DvdLogoService : WallpaperService() {
+class DvdWallpaperService : WallpaperService() {
 
     private lateinit var context: Context
 
