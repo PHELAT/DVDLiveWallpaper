@@ -11,7 +11,7 @@ class SettingsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        val sharedPreference = getSharedPreferences("DVD_OPTIONS", Context.MODE_PRIVATE)
+        val sharedPreference = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
 
         val movementSpeedOptions = resources.getStringArray(R.array.movement_speed_options)
 
@@ -59,6 +59,7 @@ class SettingsActivity : AppCompatActivity() {
 
     companion object {
         const val MOVEMENT_SPEED_OPTION = "MovementSpeed"
+        const val SHARED_PREF_NAME = "DVD_OPTIONS"
     }
 
 }
