@@ -10,8 +10,8 @@ import android.graphics.PorterDuffColorFilter
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
 import com.phelat.dvdlogo.Bouncer
-import com.phelat.dvdlogo.constant.OptionsConstant
 import com.phelat.dvdlogo.R
+import com.phelat.dvdlogo.constant.OptionsConstant
 import com.phelat.dvdlogo.provider.BouncerProvider
 import com.phelat.dvdlogo.provider.ColorProvider
 import com.phelat.dvdlogo.state.DvdLogoState
@@ -62,20 +62,15 @@ class DvdWallpaperService : WallpaperService() {
 
         override fun onSurfaceCreated(holder: SurfaceHolder?) {
             super.onSurfaceCreated(holder)
-            bouncer.speed = sharedPreference.getInt(
-                OptionsConstant.MOVEMENT_SPEED_OPTION,
-                OptionsConstant.MOVEMENT_SPEED_DEFAULT
-            )
-            setCallbacks()
-            bouncer.isRunning = true
+            runBouncer()
         }
 
         override fun onVisibilityChanged(visible: Boolean) {
             super.onVisibilityChanged(visible)
             this@DvdWallpaperService.isVisible = visible
+            setBouncerSpeed()
             if (visible && !bouncer.isRunning) {
-                setCallbacks()
-                bouncer.isRunning = true
+                runBouncer()
             } else {
                 bouncer.isRunning = false
                 removeCallbacks()
@@ -119,6 +114,19 @@ class DvdWallpaperService : WallpaperService() {
             super.onDestroy()
             bouncer.isRunning = false
             removeCallbacks()
+        }
+
+        private fun runBouncer() {
+            setBouncerSpeed()
+            setCallbacks()
+            bouncer.isRunning = true
+        }
+
+        private fun setBouncerSpeed() {
+            bouncer.speed = sharedPreference.getInt(
+                OptionsConstant.MOVEMENT_SPEED_OPTION,
+                OptionsConstant.MOVEMENT_SPEED_DEFAULT
+            )
         }
 
         private fun setCallbacks() {
