@@ -5,7 +5,7 @@ import kotlin.random.Random
 
 object ColorProvider {
 
-    fun generateColor(): Int {
+    fun provide(): Int {
         return Color.argb(
             Random.nextInt(128, 256),
             Random.nextInt(50, 256),

@@ -48,7 +48,7 @@ class DvdWallpaperService : WallpaperService() {
 
         private fun setPaintColor() {
             paint.colorFilter = PorterDuffColorFilter(
-                ColorProvider.generateColor(),
+                ColorProvider.provide(),
                 PorterDuff.Mode.SRC_IN
             )
         }
