@@ -1,4 +1,4 @@
-package com.phelat.dvdlogo
+package com.phelat.dvdlogo.service
 
 import android.content.Context
 import android.graphics.BitmapFactory
@@ -9,6 +9,9 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
+import com.phelat.dvdlogo.Bouncer
+import com.phelat.dvdlogo.OptionsConstant
+import com.phelat.dvdlogo.R
 import com.phelat.dvdlogo.provider.BouncerProvider
 import com.phelat.dvdlogo.provider.ColorProvider
 import com.phelat.dvdlogo.state.DvdLogoState
