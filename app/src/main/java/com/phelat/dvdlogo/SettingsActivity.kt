@@ -7,20 +7,17 @@ import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {
 
+    private val sharedPreference by lazy(LazyThreadSafetyMode.NONE) {
+        getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
 
-        val sharedPreference = getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
-
         val movementSpeedOptions = resources.getStringArray(R.array.movement_speed_options)
 
-        val savedSpeed = sharedPreference.getInt(MOVEMENT_SPEED_OPTION, MOVEMENT_SPEED_DEFAULT)
-        when (savedSpeed) {
-            movementSpeedOptions[0].toInt() -> movementSpeedOption0.isSelected = true
-            movementSpeedOptions[1].toInt() -> movementSpeedOption1.isSelected = true
-            movementSpeedOptions[2].toInt() -> movementSpeedOption2.isSelected = true
-        }
+        fetchSavedMovementSpeed(movementSpeedOptions)
 
         movementSpeedOption0.apply {
             text = movementSpeedOptions[0]
@@ -54,6 +51,15 @@ class SettingsActivity : AppCompatActivity() {
                     .putInt(MOVEMENT_SPEED_OPTION, movementSpeedOptions[2].toInt())
                     .apply()
             }
+        }
+    }
+
+    private fun fetchSavedMovementSpeed(movementSpeedOptions: Array<String>) {
+        val savedSpeed = sharedPreference.getInt(MOVEMENT_SPEED_OPTION, MOVEMENT_SPEED_DEFAULT)
+        when (savedSpeed) {
+            movementSpeedOptions[0].toInt() -> movementSpeedOption0.isSelected = true
+            movementSpeedOptions[1].toInt() -> movementSpeedOption1.isSelected = true
+            movementSpeedOptions[2].toInt() -> movementSpeedOption2.isSelected = true
         }
     }
 
