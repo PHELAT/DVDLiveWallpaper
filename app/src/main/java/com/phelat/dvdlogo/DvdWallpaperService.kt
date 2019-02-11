@@ -88,6 +88,12 @@ class DvdWallpaperService : WallpaperService() {
             }
         }
 
+        override fun onSurfaceDestroyed(holder: SurfaceHolder?) {
+            super.onSurfaceDestroyed(holder)
+            this@DvdWallpaperService.isVisible = false
+            handler.removeCallbacks(runnable)
+        }
+
     }
 
 }
