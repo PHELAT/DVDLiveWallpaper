@@ -1,4 +1,4 @@
-package com.phelat.dvdlogo
+package com.phelat.dvdlogo.state
 
 data class DvdLogoState(
     var dimensionInSafeArea: Int,

@@ -1,6 +1,7 @@
 package com.phelat.dvdlogo
 
 import android.os.Handler
+import com.phelat.dvdlogo.state.DvdLogoState
 
 class Bouncer(
     var speed: Int,

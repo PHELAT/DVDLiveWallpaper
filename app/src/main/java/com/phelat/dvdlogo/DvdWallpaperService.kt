@@ -11,6 +11,7 @@ import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
 import com.phelat.dvdlogo.provider.BouncerProvider
 import com.phelat.dvdlogo.provider.ColorProvider
+import com.phelat.dvdlogo.state.DvdLogoState
 
 class DvdWallpaperService : WallpaperService() {
 

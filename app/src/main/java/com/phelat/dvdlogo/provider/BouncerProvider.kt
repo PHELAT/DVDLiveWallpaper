@@ -3,7 +3,7 @@ package com.phelat.dvdlogo.provider
 import android.graphics.Bitmap
 import android.util.DisplayMetrics
 import com.phelat.dvdlogo.Bouncer
-import com.phelat.dvdlogo.DvdLogoState
+import com.phelat.dvdlogo.state.DvdLogoState
 import com.phelat.dvdlogo.OptionsConstant
 import kotlin.random.Random
 
