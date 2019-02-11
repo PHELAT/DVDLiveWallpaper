@@ -10,7 +10,7 @@ import android.graphics.PorterDuffColorFilter
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
 import com.phelat.dvdlogo.Bouncer
-import com.phelat.dvdlogo.OptionsConstant
+import com.phelat.dvdlogo.constant.OptionsConstant
 import com.phelat.dvdlogo.R
 import com.phelat.dvdlogo.provider.BouncerProvider
 import com.phelat.dvdlogo.provider.ColorProvider

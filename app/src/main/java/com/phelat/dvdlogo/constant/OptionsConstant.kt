@@ -1,4 +1,4 @@
-package com.phelat.dvdlogo
+package com.phelat.dvdlogo.constant
 
 object OptionsConstant {
     const val MOVEMENT_SPEED_OPTION = "MovementSpeed"

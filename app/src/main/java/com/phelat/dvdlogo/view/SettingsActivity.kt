@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.forEach
 import com.phelat.dvdlogo.Bouncer
-import com.phelat.dvdlogo.OptionsConstant
+import com.phelat.dvdlogo.constant.OptionsConstant
 import com.phelat.dvdlogo.R
 import com.phelat.dvdlogo.provider.BouncerProvider
 import com.phelat.dvdlogo.provider.ColorProvider
