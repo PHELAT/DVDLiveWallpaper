@@ -7,12 +7,15 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
+import android.os.Handler
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
 
 class DvdWallpaperService : WallpaperService() {
 
     private lateinit var context: Context
+
+    private var isVisible = false
 
     override fun onCreateEngine(): Engine {
         context = this
@@ -22,6 +25,12 @@ class DvdWallpaperService : WallpaperService() {
     inner class DvdLogoEngine : Engine() {
 
         private var canvas: Canvas? = null
+
+        private val handler = Handler()
+
+        private val runnable = Runnable {
+            initCanvas()
+        }
 
         private val bitmap by lazy(LazyThreadSafetyMode.NONE) {
             BitmapFactory.decodeResource(context.resources, R.drawable.dvd)
@@ -42,6 +51,16 @@ class DvdWallpaperService : WallpaperService() {
             initCanvas()
         }
 
+        override fun onVisibilityChanged(visible: Boolean) {
+            super.onVisibilityChanged(visible)
+            this@DvdWallpaperService.isVisible = visible
+            if (visible) {
+                initCanvas()
+            } else {
+                handler.removeCallbacks(runnable)
+            }
+        }
+
         private fun initCanvas() {
             canvas = null
             try {
@@ -54,6 +73,7 @@ class DvdWallpaperService : WallpaperService() {
                     surfaceHolder.unlockCanvasAndPost(canvas)
                 }
             }
+            // TODO: Redraw with new position
         }
 
         private fun draw() {
