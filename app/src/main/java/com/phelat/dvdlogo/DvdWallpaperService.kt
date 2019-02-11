@@ -94,6 +94,11 @@ class DvdWallpaperService : WallpaperService() {
             handler.removeCallbacks(runnable)
         }
 
+        override fun onDestroy() {
+            super.onDestroy()
+            handler.removeCallbacks(runnable)
+        }
+
     }
 
 }
