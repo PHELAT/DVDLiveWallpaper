@@ -69,8 +69,12 @@
             android:layout_marginRight="16dp"
             android:background="@drawable/selector_selected_option"
             android:gravity="center"
+            android:tag="512"
+            android:text="@string/movement_speed_one"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/movementSpeedOption1"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/movementSpeedOption1"
@@ -80,8 +84,12 @@
             android:layout_marginRight="16dp"
             android:background="@drawable/selector_selected_option"
             android:gravity="center"
+            android:tag="64"
+            android:text="@string/movement_speed_two"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/movementSpeedOption2"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/movementSpeedOption2"
@@ -91,8 +99,12 @@
             android:layout_marginRight="16dp"
             android:background="@drawable/selector_selected_option"
             android:gravity="center"
+            android:tag="32"
+            android:text="@string/movement_speed_three"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

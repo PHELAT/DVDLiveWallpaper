@@ -3,11 +3,8 @@
     <string name="app_name">DVD LiveWallpaper</string>
 
     <string name="movement_speed_title">Movement Speed</string>
-
-    <string-array name="movement_speed_options">
-        <item>16</item>
-        <item>32</item>
-        <item>64</item>
-    </string-array>
+    <string name="movement_speed_one">1</string>
+    <string name="movement_speed_two">2</string>
+    <string name="movement_speed_three">3</string>
 
 </resources>
