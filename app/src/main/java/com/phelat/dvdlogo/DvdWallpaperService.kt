@@ -10,6 +10,7 @@ import android.graphics.PorterDuffColorFilter
 import android.os.Handler
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
+import kotlin.random.Random
 
 class DvdWallpaperService : WallpaperService() {
 
@@ -17,8 +18,25 @@ class DvdWallpaperService : WallpaperService() {
 
     private var isVisible = false
 
+    private val bitmap by lazy(LazyThreadSafetyMode.NONE) {
+        BitmapFactory.decodeResource(context.resources, R.drawable.dvd)
+    }
+
+    private lateinit var dvdEntityX: DvdLogoState
+    private lateinit var dvdEntityY: DvdLogoState
+
     override fun onCreateEngine(): Engine {
         context = this
+        context.resources.displayMetrics.apply {
+            val canvasSafeAreaForX = widthPixels - bitmap.width
+            val canvasSafeAreaForY = heightPixels - bitmap.height
+
+            val bitmapInitialX = Random.nextInt(bitmap.width, canvasSafeAreaForX)
+            val bitmapInitialY = Random.nextInt(bitmap.height, canvasSafeAreaForY)
+
+            dvdEntityX = DvdLogoState(bitmapInitialX, bitmap.width, widthPixels, 10)
+            dvdEntityY = DvdLogoState(bitmapInitialY, bitmap.height, heightPixels, 10)
+        }
         return DvdLogoEngine()
     }
 
@@ -30,10 +48,6 @@ class DvdWallpaperService : WallpaperService() {
 
         private val runnable = Runnable {
             initCanvas()
-        }
-
-        private val bitmap by lazy(LazyThreadSafetyMode.NONE) {
-            BitmapFactory.decodeResource(context.resources, R.drawable.dvd)
         }
 
         private val paint by lazy(LazyThreadSafetyMode.NONE) {
@@ -80,14 +94,36 @@ class DvdWallpaperService : WallpaperService() {
         }
 
         private fun draw() {
+            dvdEntityX.apply {
+                dimensionInSafeArea += movementSpeed
+                checkBorder(this)
+            }
+            dvdEntityY.apply {
+                dimensionInSafeArea += movementSpeed
+                checkBorder(this)
+            }
             canvas?.apply {
                 drawColor(Color.parseColor("#000000"))
                 drawBitmap(
                     bitmap,
-                    (width - bitmap.width).toFloat() / 2,
-                    (height - bitmap.height).toFloat() / 2,
+                    dvdEntityX.dimensionInSafeArea.toFloat(),
+                    dvdEntityY.dimensionInSafeArea.toFloat(),
                     paint
                 )
+            }
+        }
+
+        private fun checkBorder(dvdEntity: DvdLogoState) {
+            dvdEntity.apply {
+                val isBitmapOnEndBorder = dimensionInSafeArea + bitmapDimension >= screenDimension
+                val isBitmapOnStartBorder = dimensionInSafeArea <= 0
+                if (isBitmapOnEndBorder) {
+                    movementSpeed = movementSpeed.unaryMinus()
+                    dimensionInSafeArea = screenDimension - bitmapDimension
+                } else if (isBitmapOnStartBorder) {
+                    movementSpeed = movementSpeed.unaryMinus()
+                    dimensionInSafeArea = 0
+                }
             }
         }
 
