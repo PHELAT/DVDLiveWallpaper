@@ -2,6 +2,7 @@ package com.phelat.dvdlogo
 
 import android.content.Context
 import android.graphics.Canvas
+import android.graphics.Color
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
 
@@ -28,12 +29,18 @@ class DvdWallpaperService : WallpaperService() {
             try {
                 canvas = surfaceHolder.lockCanvas()
                 if (canvas != null) {
-                    // TODO: DRAW
+                    draw()
                 }
             } finally {
                 if (canvas != null) {
                     surfaceHolder.unlockCanvasAndPost(canvas)
                 }
+            }
+        }
+
+        private fun draw() {
+            canvas?.apply {
+                drawColor(Color.parseColor("#000000"))
             }
         }
 
