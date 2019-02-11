@@ -5,3 +5,5 @@ DVD bouncing logo as a live wallpaper for your Android device!
 ## What you can learn from this?
 - You can learn how to develop live wallpapers for Android.
 - You can learn how to draw on canvas.
+## Download
+You can download the latest version from <a href="https://github.com/PHELAT/DVDLiveWallpaper/raw/master/apk/release/latest-version.apk" target="_blank">here</a>.
