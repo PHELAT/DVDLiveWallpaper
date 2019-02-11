@@ -16,6 +16,10 @@ class DvdWallpaperService : WallpaperService() {
 
     private lateinit var context: Context
 
+    private val sharedPreference by lazy(LazyThreadSafetyMode.NONE) {
+        getSharedPreferences(OptionsConstant.SHARED_PREF_NAME, Context.MODE_PRIVATE)
+    }
+
     private var isVisible = false
 
     private val bitmap by lazy(LazyThreadSafetyMode.NONE) {
@@ -60,6 +64,8 @@ class DvdWallpaperService : WallpaperService() {
             }
         }
 
+        private var savedSpeed = 32
+
         private fun setPaintColor() {
             paint.colorFilter = PorterDuffColorFilter(
                 randomColor(),
@@ -85,6 +91,10 @@ class DvdWallpaperService : WallpaperService() {
             super.onVisibilityChanged(visible)
             this@DvdWallpaperService.isVisible = visible
             if (visible) {
+                savedSpeed = sharedPreference.getInt(
+                    OptionsConstant.MOVEMENT_SPEED_OPTION,
+                    OptionsConstant.MOVEMENT_SPEED_DEFAULT
+                )
                 initCanvas()
             } else {
                 handler.removeCallbacks(runnable)
@@ -105,7 +115,7 @@ class DvdWallpaperService : WallpaperService() {
             }
             handler.removeCallbacks(runnable)
             if (isVisible) {
-                handler.postDelayed(runnable, 32)
+                handler.postDelayed(runnable, savedSpeed.toLong())
             }
         }
 
