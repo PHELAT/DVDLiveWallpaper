@@ -1,7 +1,10 @@
 package com.phelat.dvdlogo
 
 import android.content.Context
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
+import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.forEach
@@ -12,6 +15,14 @@ class SettingsActivity : AppCompatActivity() {
     private val sharedPreference by lazy(LazyThreadSafetyMode.NONE) {
         getSharedPreferences(OptionsConstant.SHARED_PREF_NAME, Context.MODE_PRIVATE)
     }
+
+    private val handler = Handler()
+
+    private val runnable = Runnable {
+        changeColor()
+    }
+
+    private var savedSpeed = OptionsConstant.MOVEMENT_SPEED_DEFAULT
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,8 +42,21 @@ class SettingsActivity : AppCompatActivity() {
         fetchSavedMovementSpeed(movementSpeedOptions)
     }
 
+    override fun onResume() {
+        super.onResume()
+        handler.postDelayed(runnable, savedSpeed.toLong())
+    }
+
+    private fun changeColor() {
+        dvdLogo.colorFilter = PorterDuffColorFilter(
+            ColorGenerator.generateColor(),
+            PorterDuff.Mode.SRC_IN
+        )
+        handler.postDelayed(runnable, savedSpeed.toLong())
+    }
+
     private fun fetchSavedMovementSpeed(movementSpeedOptions: MutableList<Int>) {
-        val savedSpeed = sharedPreference.getInt(
+        savedSpeed = sharedPreference.getInt(
             OptionsConstant.MOVEMENT_SPEED_OPTION,
             OptionsConstant.MOVEMENT_SPEED_DEFAULT
         )
@@ -60,6 +84,11 @@ class SettingsActivity : AppCompatActivity() {
         sharedPreference.edit()
             .putInt(OptionsConstant.MOVEMENT_SPEED_OPTION, speed)
             .apply()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        handler.removeCallbacks(runnable)
     }
 
 }
