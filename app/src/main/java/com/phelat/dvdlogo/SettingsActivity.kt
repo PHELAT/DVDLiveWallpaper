@@ -15,7 +15,7 @@ class SettingsActivity : AppCompatActivity() {
 
         val movementSpeedOptions = resources.getStringArray(R.array.movement_speed_options)
 
-        val savedSpeed = sharedPreference.getInt(MOVEMENT_SPEED_OPTION, 32)
+        val savedSpeed = sharedPreference.getInt(MOVEMENT_SPEED_OPTION, MOVEMENT_SPEED_DEFAULT)
         when (savedSpeed) {
             movementSpeedOptions[0].toInt() -> movementSpeedOption0.isSelected = true
             movementSpeedOptions[1].toInt() -> movementSpeedOption1.isSelected = true
@@ -60,6 +60,7 @@ class SettingsActivity : AppCompatActivity() {
     companion object {
         const val MOVEMENT_SPEED_OPTION = "MovementSpeed"
         const val SHARED_PREF_NAME = "DVD_OPTIONS"
+        const val MOVEMENT_SPEED_DEFAULT = 32
     }
 
 }
