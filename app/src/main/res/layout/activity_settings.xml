@@ -1,7 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FAFAFA">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/title"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="center"
+        android:text="@string/app_name"
+        android:textColor="#000000"
+        android:textSize="@dimen/title_text_size"
+        app:fontFamily="@font/nunito_bold"
+        app:layout_constraintBottom_toTopOf="@+id/space"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Space
+        android:id="@+id/space"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <View
+        android:id="@+id/centerDivider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="#E0E0E0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/movementSpeedTitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:padding="16dp"
+        android:text="@string/movement_speed_title"
+        android:textColor="#424242"
+        app:fontFamily="@font/nunito"
+        app:layout_constraintEnd_toStartOf="@id/movementSpeedOption0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/centerDivider" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/movementSpeedOption0"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/selector_selected_option"
+        android:gravity="center"
+        android:clickable="true"
+        app:layout_constraintEnd_toStartOf="@id/movementSpeedOption1"
+        app:layout_constraintTop_toBottomOf="@+id/centerDivider" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/movementSpeedOption1"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/selector_selected_option"
+        android:gravity="center"
+        app:layout_constraintEnd_toStartOf="@id/movementSpeedOption2"
+        app:layout_constraintTop_toBottomOf="@+id/centerDivider" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/movementSpeedOption2"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/selector_selected_option"
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/centerDivider" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,3 +1,13 @@
 <resources>
+
     <string name="app_name">DVD LiveWallpaper</string>
+
+    <string name="movement_speed_title">Movement Speed</string>
+
+    <string-array name="movement_speed_options">
+        <item>16</item>
+        <item>32</item>
+        <item>64</item>
+    </string-array>
+
 </resources>

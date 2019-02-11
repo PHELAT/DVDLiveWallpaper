@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_selected="true">
+        <shape android:shape="rectangle">
+            <corners android:radius="@dimen/selected_option_corner_radius" />
+            <solid android:color="#859E9E9E" />
+        </shape>
+    </item>
+    <item android:drawable="@drawable/shape_selected_option" android:state_pressed="true" />
+</selector>
