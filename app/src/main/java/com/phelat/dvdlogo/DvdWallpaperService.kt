@@ -73,7 +73,10 @@ class DvdWallpaperService : WallpaperService() {
                     surfaceHolder.unlockCanvasAndPost(canvas)
                 }
             }
-            // TODO: Redraw with new position
+            handler.removeCallbacks(runnable)
+            if (isVisible) {
+                handler.postDelayed(runnable, 32)
+            }
         }
 
         private fun draw() {
