@@ -3,7 +3,7 @@ package com.phelat.dvdlogo
 import android.graphics.Color
 import kotlin.random.Random
 
-object ColorGenerator {
+object ColorProvider {
 
     fun generateColor(): Int {
         return Color.argb(

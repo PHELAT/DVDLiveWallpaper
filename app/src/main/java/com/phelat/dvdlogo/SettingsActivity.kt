@@ -56,7 +56,7 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun changeColor() {
         dvdLogo.colorFilter = PorterDuffColorFilter(
-            ColorGenerator.generateColor(),
+            ColorProvider.generateColor(),
             PorterDuff.Mode.SRC_IN
         )
     }
