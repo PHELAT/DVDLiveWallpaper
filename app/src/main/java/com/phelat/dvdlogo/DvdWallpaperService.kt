@@ -7,7 +7,6 @@ import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
-import android.os.Handler
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
 import kotlin.random.Random
@@ -26,8 +25,7 @@ class DvdWallpaperService : WallpaperService() {
         BitmapFactory.decodeResource(context.resources, R.drawable.dvd)
     }
 
-    private lateinit var dvdEntityX: DvdLogoState
-    private lateinit var dvdEntityY: DvdLogoState
+    private lateinit var bouncer: Bouncer
 
     override fun onCreateEngine(): Engine {
         context = this
@@ -38,8 +36,10 @@ class DvdWallpaperService : WallpaperService() {
             val bitmapInitialX = Random.nextInt(bitmap.width, canvasSafeAreaForX)
             val bitmapInitialY = Random.nextInt(bitmap.height, canvasSafeAreaForY)
 
-            dvdEntityX = DvdLogoState(bitmapInitialX, bitmap.width, widthPixels, 10)
-            dvdEntityY = DvdLogoState(bitmapInitialY, bitmap.height, heightPixels, 10)
+            val dvdEntityX = DvdLogoState(bitmapInitialX, bitmap.width, widthPixels, 10)
+            val dvdEntityY = DvdLogoState(bitmapInitialY, bitmap.height, heightPixels, 10)
+
+            bouncer = Bouncer(OptionsConstant.MOVEMENT_SPEED_DEFAULT, dvdEntityX, dvdEntityY)
         }
         return DvdLogoEngine()
     }
@@ -47,12 +47,6 @@ class DvdWallpaperService : WallpaperService() {
     inner class DvdLogoEngine : Engine() {
 
         private var canvas: Canvas? = null
-
-        private val handler = Handler()
-
-        private val runnable = Runnable {
-            initCanvas()
-        }
 
         private val paint by lazy(LazyThreadSafetyMode.NONE) {
             Paint().apply {
@@ -64,8 +58,6 @@ class DvdWallpaperService : WallpaperService() {
             }
         }
 
-        private var savedSpeed = 32
-
         private fun setPaintColor() {
             paint.colorFilter = PorterDuffColorFilter(
                 ColorGenerator.generateColor(),
@@ -75,91 +67,77 @@ class DvdWallpaperService : WallpaperService() {
 
         override fun onSurfaceCreated(holder: SurfaceHolder?) {
             super.onSurfaceCreated(holder)
-            initCanvas()
+            bouncer.speed = sharedPreference.getInt(
+                OptionsConstant.MOVEMENT_SPEED_OPTION,
+                OptionsConstant.MOVEMENT_SPEED_DEFAULT
+            )
+            setCallbacks()
+            bouncer.isRunning = true
         }
 
         override fun onVisibilityChanged(visible: Boolean) {
             super.onVisibilityChanged(visible)
             this@DvdWallpaperService.isVisible = visible
-            if (visible) {
-                savedSpeed = sharedPreference.getInt(
-                    OptionsConstant.MOVEMENT_SPEED_OPTION,
-                    OptionsConstant.MOVEMENT_SPEED_DEFAULT
-                )
-                initCanvas()
+            if (visible && !bouncer.isRunning) {
+                setCallbacks()
+                bouncer.isRunning = true
             } else {
-                handler.removeCallbacks(runnable)
+                bouncer.isRunning = false
+                removeCallbacks()
             }
         }
 
-        private fun initCanvas() {
+        private fun drawBitmap(x: DvdLogoState, y: DvdLogoState) {
             canvas = null
             try {
                 canvas = surfaceHolder.lockCanvas()
                 if (canvas != null) {
-                    draw()
+                    canvas?.apply {
+                        drawColor(Color.parseColor("#000000"))
+                        drawBitmap(
+                            bitmap,
+                            x.dimensionInSafeArea.toFloat(),
+                            y.dimensionInSafeArea.toFloat(),
+                            paint
+                        )
+                    }
                 }
             } finally {
                 if (canvas != null) {
                     surfaceHolder.unlockCanvasAndPost(canvas)
                 }
             }
-            handler.removeCallbacks(runnable)
+            bouncer.isRunning = false
             if (isVisible) {
-                handler.postDelayed(runnable, savedSpeed.toLong())
-            }
-        }
-
-        private fun draw() {
-            dvdEntityX.apply {
-                dimensionInSafeArea += movementSpeed
-                checkBorder(this)
-            }
-            dvdEntityY.apply {
-                dimensionInSafeArea += movementSpeed
-                checkBorder(this)
-            }
-            canvas?.apply {
-                drawColor(Color.parseColor("#000000"))
-                drawBitmap(
-                    bitmap,
-                    dvdEntityX.dimensionInSafeArea.toFloat(),
-                    dvdEntityY.dimensionInSafeArea.toFloat(),
-                    paint
-                )
-            }
-        }
-
-        private fun checkBorder(dvdEntity: DvdLogoState) {
-            dvdEntity.apply {
-                val isBitmapOnEndBorder = dimensionInSafeArea + bitmapDimension >= screenDimension
-                val isBitmapOnStartBorder = dimensionInSafeArea <= 0
-                if (isBitmapOnEndBorder) {
-                    reverseDirection(this)
-                    dimensionInSafeArea = screenDimension - bitmapDimension
-                } else if (isBitmapOnStartBorder) {
-                    reverseDirection(this)
-                    dimensionInSafeArea = 0
-                }
-            }
-        }
-
-        private fun reverseDirection(dvdEntity: DvdLogoState) {
-            dvdEntity.apply {
-                movementSpeed = movementSpeed.unaryMinus()
-                setPaintColor()
+                bouncer.isRunning = true
             }
         }
 
         override fun onSurfaceDestroyed(holder: SurfaceHolder?) {
             super.onSurfaceDestroyed(holder)
             this@DvdWallpaperService.isVisible = false
-            handler.removeCallbacks(runnable)
+            bouncer.isRunning = false
+            removeCallbacks()
         }
 
         override fun onDestroy() {
             super.onDestroy()
-            handler.removeCallbacks(runnable)
+            bouncer.isRunning = false
+            removeCallbacks()
+        }
+
+        private fun setCallbacks() {
+            bouncer.onChangeDirection {
+                setPaintColor()
+            }
+            bouncer.onMove { x, y ->
+                drawBitmap(x, y)
+            }
+        }
+
+        private fun removeCallbacks() {
+            bouncer.onChangeDirection { }
+            bouncer.onMove { x, y -> }
         }
 
     }
