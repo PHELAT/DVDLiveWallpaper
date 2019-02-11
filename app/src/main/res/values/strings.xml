@@ -6,5 +6,6 @@
     <string name="movement_speed_one">1</string>
     <string name="movement_speed_two">2</string>
     <string name="movement_speed_three">3</string>
+    <string name="movement_speed_four">4</string>
 
 </resources>

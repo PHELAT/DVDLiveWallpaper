@@ -40,6 +40,7 @@ class SettingsActivity : AppCompatActivity() {
             movementSpeedOptions[0] -> movementSpeedOption0.isSelected = true
             movementSpeedOptions[1] -> movementSpeedOption1.isSelected = true
             movementSpeedOptions[2] -> movementSpeedOption2.isSelected = true
+            movementSpeedOptions[3] -> movementSpeedOption3.isSelected = true
         }
     }
 
