@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_settings.*
 class SettingsActivity : AppCompatActivity() {
 
     private val sharedPreference by lazy(LazyThreadSafetyMode.NONE) {
-        getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        getSharedPreferences(OptionsConstant.SHARED_PREF_NAME, Context.MODE_PRIVATE)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,7 +32,10 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun fetchSavedMovementSpeed(movementSpeedOptions: Array<String>) {
-        val savedSpeed = sharedPreference.getInt(MOVEMENT_SPEED_OPTION, MOVEMENT_SPEED_DEFAULT)
+        val savedSpeed = sharedPreference.getInt(
+            OptionsConstant.MOVEMENT_SPEED_OPTION,
+            OptionsConstant.MOVEMENT_SPEED_DEFAULT
+        )
         when (savedSpeed) {
             movementSpeedOptions[0].toInt() -> movementSpeedOption0.isSelected = true
             movementSpeedOptions[1].toInt() -> movementSpeedOption1.isSelected = true
@@ -61,14 +64,8 @@ class SettingsActivity : AppCompatActivity() {
 
     private fun setMovementSpeed(speed: Int) {
         sharedPreference.edit()
-            .putInt(MOVEMENT_SPEED_OPTION, speed)
+            .putInt(OptionsConstant.MOVEMENT_SPEED_OPTION, speed)
             .apply()
-    }
-
-    companion object {
-        const val MOVEMENT_SPEED_OPTION = "MovementSpeed"
-        const val SHARED_PREF_NAME = "DVD_OPTIONS"
-        const val MOVEMENT_SPEED_DEFAULT = 32
     }
 
 }
