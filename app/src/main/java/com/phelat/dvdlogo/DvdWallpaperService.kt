@@ -9,7 +9,6 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
-import kotlin.random.Random
 
 class DvdWallpaperService : WallpaperService() {
 
@@ -29,18 +28,7 @@ class DvdWallpaperService : WallpaperService() {
 
     override fun onCreateEngine(): Engine {
         context = this
-        context.resources.displayMetrics.apply {
-            val canvasSafeAreaForX = widthPixels - bitmap.width
-            val canvasSafeAreaForY = heightPixels - bitmap.height
-
-            val bitmapInitialX = Random.nextInt(bitmap.width, canvasSafeAreaForX)
-            val bitmapInitialY = Random.nextInt(bitmap.height, canvasSafeAreaForY)
-
-            val dvdEntityX = DvdLogoState(bitmapInitialX, bitmap.width, widthPixels, 10)
-            val dvdEntityY = DvdLogoState(bitmapInitialY, bitmap.height, heightPixels, 10)
-
-            bouncer = Bouncer(OptionsConstant.MOVEMENT_SPEED_DEFAULT, dvdEntityX, dvdEntityY)
-        }
+        bouncer = BouncerProvider().provide(context.resources.displayMetrics, bitmap)
         return DvdLogoEngine()
     }
 

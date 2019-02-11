@@ -1,10 +1,10 @@
 package com.phelat.dvdlogo
 
 import android.content.Context
+import android.graphics.BitmapFactory
 import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.os.Bundle
-import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.forEach
@@ -16,13 +16,7 @@ class SettingsActivity : AppCompatActivity() {
         getSharedPreferences(OptionsConstant.SHARED_PREF_NAME, Context.MODE_PRIVATE)
     }
 
-    private val handler = Handler()
-
-    private val runnable = Runnable {
-        changeColor()
-    }
-
-    private var savedSpeed = OptionsConstant.MOVEMENT_SPEED_DEFAULT
+    private lateinit var bouncer: Bouncer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,12 +33,25 @@ class SettingsActivity : AppCompatActivity() {
             )
             movementSpeedOptions += speed
         }
-        fetchSavedMovementSpeed(movementSpeedOptions)
+        val savedSpeed = fetchSavedMovementSpeed(movementSpeedOptions)
+
+        bouncer = BouncerProvider().provide(
+            resources.displayMetrics,
+            BitmapFactory.decodeResource(resources, R.drawable.dvd)
+        ).apply {
+            speed = savedSpeed
+            onMove { _, _ ->
+                bouncer.isRunning = true
+            }
+            onChangeDirection {
+                changeColor()
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
-        handler.postDelayed(runnable, savedSpeed.toLong())
+        bouncer.isRunning = true
     }
 
     private fun changeColor() {
@@ -52,11 +59,10 @@ class SettingsActivity : AppCompatActivity() {
             ColorGenerator.generateColor(),
             PorterDuff.Mode.SRC_IN
         )
-        handler.postDelayed(runnable, savedSpeed.toLong())
     }
 
-    private fun fetchSavedMovementSpeed(movementSpeedOptions: MutableList<Int>) {
-        savedSpeed = sharedPreference.getInt(
+    private fun fetchSavedMovementSpeed(movementSpeedOptions: MutableList<Int>): Int {
+        val savedSpeed = sharedPreference.getInt(
             OptionsConstant.MOVEMENT_SPEED_OPTION,
             OptionsConstant.MOVEMENT_SPEED_DEFAULT
         )
@@ -66,6 +72,7 @@ class SettingsActivity : AppCompatActivity() {
             movementSpeedOptions[2] -> movementSpeedOption2.isSelected = true
             movementSpeedOptions[3] -> movementSpeedOption3.isSelected = true
         }
+        return savedSpeed
     }
 
     private fun initMovementSpeedOptionView(view: AppCompatTextView, movementSpeed: Int) {
@@ -81,6 +88,7 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun setMovementSpeed(speed: Int) {
+        bouncer.speed = speed
         sharedPreference.edit()
             .putInt(OptionsConstant.MOVEMENT_SPEED_OPTION, speed)
             .apply()
@@ -88,7 +96,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onPause() {
         super.onPause()
-        handler.removeCallbacks(runnable)
+        bouncer.isRunning = false
     }
 
 }
