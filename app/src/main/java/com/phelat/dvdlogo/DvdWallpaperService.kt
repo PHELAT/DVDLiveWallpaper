@@ -68,17 +68,8 @@ class DvdWallpaperService : WallpaperService() {
 
         private fun setPaintColor() {
             paint.colorFilter = PorterDuffColorFilter(
-                randomColor(),
+                ColorGenerator.generateColor(),
                 PorterDuff.Mode.SRC_IN
-            )
-        }
-
-        private fun randomColor(): Int {
-            return Color.argb(
-                Random.nextInt(128, 256),
-                Random.nextInt(50, 256),
-                Random.nextInt(50, 256),
-                Random.nextInt(50, 256)
             )
         }
 
