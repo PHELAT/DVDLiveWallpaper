@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FAFAFA">
@@ -49,42 +50,50 @@
         android:text="@string/movement_speed_title"
         android:textColor="#424242"
         app:fontFamily="@font/nunito"
-        app:layout_constraintEnd_toStartOf="@id/movementSpeedOption0"
+        app:layout_constraintEnd_toStartOf="@id/movementSpeedHolder"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/centerDivider" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/movementSpeedOption0"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/selector_selected_option"
-        android:gravity="center"
-        android:clickable="true"
-        app:layout_constraintEnd_toStartOf="@id/movementSpeedOption1"
-        app:layout_constraintTop_toBottomOf="@+id/centerDivider" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/movementSpeedOption1"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/selector_selected_option"
-        android:gravity="center"
-        app:layout_constraintEnd_toStartOf="@id/movementSpeedOption2"
-        app:layout_constraintTop_toBottomOf="@+id/centerDivider" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/movementSpeedOption2"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginRight="16dp"
-        android:background="@drawable/selector_selected_option"
-        android:gravity="center"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/movementSpeedHolder"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/centerDivider" />
+        app:layout_constraintTop_toBottomOf="@+id/centerDivider">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/movementSpeedOption0"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/selector_selected_option"
+            android:gravity="center"
+            app:layout_constraintEnd_toStartOf="@id/movementSpeedOption1"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/movementSpeedOption1"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/selector_selected_option"
+            android:gravity="center"
+            app:layout_constraintEnd_toStartOf="@id/movementSpeedOption2"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/movementSpeedOption2"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginRight="16dp"
+            android:background="@drawable/selector_selected_option"
+            android:gravity="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

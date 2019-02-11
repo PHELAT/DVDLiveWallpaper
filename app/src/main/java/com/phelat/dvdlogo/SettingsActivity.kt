@@ -3,6 +3,9 @@ package com.phelat.dvdlogo
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.view.forEach
+import androidx.core.view.forEachIndexed
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {
@@ -19,32 +22,12 @@ class SettingsActivity : AppCompatActivity() {
 
         fetchSavedMovementSpeed(movementSpeedOptions)
 
-        movementSpeedOption0.apply {
-            text = movementSpeedOptions[0]
-            setOnClickListener {
-                isSelected = true
-                movementSpeedOption1.isSelected = false
-                movementSpeedOption2.isSelected = false
-                setMovementSpeed(movementSpeedOptions[0].toInt())
-            }
-        }
-        movementSpeedOption1.apply {
-            text = movementSpeedOptions[1]
-            setOnClickListener {
-                isSelected = true
-                movementSpeedOption0.isSelected = false
-                movementSpeedOption2.isSelected = false
-                setMovementSpeed(movementSpeedOptions[1].toInt())
-            }
-        }
-        movementSpeedOption2.apply {
-            text = movementSpeedOptions[2]
-            setOnClickListener {
-                isSelected = true
-                movementSpeedOption0.isSelected = false
-                movementSpeedOption1.isSelected = false
-                setMovementSpeed(movementSpeedOptions[2].toInt())
-            }
+        movementSpeedHolder.forEachIndexed { index, optionView ->
+            initMovementSpeedOptionView(
+                optionView as AppCompatTextView,
+                index,
+                movementSpeedOptions
+            )
         }
     }
 
@@ -54,6 +37,25 @@ class SettingsActivity : AppCompatActivity() {
             movementSpeedOptions[0].toInt() -> movementSpeedOption0.isSelected = true
             movementSpeedOptions[1].toInt() -> movementSpeedOption1.isSelected = true
             movementSpeedOptions[2].toInt() -> movementSpeedOption2.isSelected = true
+        }
+    }
+
+    private fun initMovementSpeedOptionView(
+        view: AppCompatTextView,
+        position: Int,
+        movementSpeedOptions: Array<String>
+    ) {
+        view.apply {
+            text = movementSpeedOptions[position]
+            setOnClickListener {
+                isSelected = true
+                movementSpeedHolder.forEach { child ->
+                    if (child.id != view.id) {
+                        child.isSelected = false
+                    }
+                }
+                setMovementSpeed(movementSpeedOptions[position].toInt())
+            }
         }
     }
 
