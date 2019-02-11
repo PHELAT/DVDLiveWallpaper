@@ -8,6 +8,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.view.forEach
+import com.phelat.dvdlogo.provider.BouncerProvider
+import com.phelat.dvdlogo.provider.ColorProvider
 import kotlinx.android.synthetic.main.activity_settings.*
 
 class SettingsActivity : AppCompatActivity() {

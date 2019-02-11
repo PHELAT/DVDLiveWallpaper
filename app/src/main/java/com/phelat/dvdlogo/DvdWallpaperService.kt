@@ -9,6 +9,8 @@ import android.graphics.PorterDuff
 import android.graphics.PorterDuffColorFilter
 import android.service.wallpaper.WallpaperService
 import android.view.SurfaceHolder
+import com.phelat.dvdlogo.provider.BouncerProvider
+import com.phelat.dvdlogo.provider.ColorProvider
 
 class DvdWallpaperService : WallpaperService() {
 
@@ -28,7 +30,8 @@ class DvdWallpaperService : WallpaperService() {
 
     override fun onCreateEngine(): Engine {
         context = this
-        bouncer = BouncerProvider().provide(context.resources.displayMetrics, bitmap)
+        bouncer = BouncerProvider()
+            .provide(context.resources.displayMetrics, bitmap)
         return DvdLogoEngine()
     }
 

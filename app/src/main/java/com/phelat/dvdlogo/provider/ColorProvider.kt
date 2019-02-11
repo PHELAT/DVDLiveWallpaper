@@ -1,4 +1,4 @@
-package com.phelat.dvdlogo
+package com.phelat.dvdlogo.provider
 
 import android.graphics.Color
 import kotlin.random.Random
