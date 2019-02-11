@@ -60,6 +60,22 @@ class DvdWallpaperService : WallpaperService() {
             }
         }
 
+        private fun setPaintColor() {
+            paint.colorFilter = PorterDuffColorFilter(
+                randomColor(),
+                PorterDuff.Mode.SRC_IN
+            )
+        }
+
+        private fun randomColor(): Int {
+            return Color.argb(
+                Random.nextInt(128, 256),
+                Random.nextInt(50, 256),
+                Random.nextInt(50, 256),
+                Random.nextInt(50, 256)
+            )
+        }
+
         override fun onSurfaceCreated(holder: SurfaceHolder?) {
             super.onSurfaceCreated(holder)
             initCanvas()
@@ -118,12 +134,19 @@ class DvdWallpaperService : WallpaperService() {
                 val isBitmapOnEndBorder = dimensionInSafeArea + bitmapDimension >= screenDimension
                 val isBitmapOnStartBorder = dimensionInSafeArea <= 0
                 if (isBitmapOnEndBorder) {
-                    movementSpeed = movementSpeed.unaryMinus()
+                    reverseDirection(this)
                     dimensionInSafeArea = screenDimension - bitmapDimension
                 } else if (isBitmapOnStartBorder) {
-                    movementSpeed = movementSpeed.unaryMinus()
+                    reverseDirection(this)
                     dimensionInSafeArea = 0
                 }
+            }
+        }
+
+        private fun reverseDirection(dvdEntity: DvdLogoState) {
+            dvdEntity.apply {
+                movementSpeed = movementSpeed.unaryMinus()
+                setPaintColor()
             }
         }
 
