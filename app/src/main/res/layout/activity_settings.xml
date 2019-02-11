@@ -7,18 +7,31 @@
     android:layout_height="match_parent"
     android:background="#FAFAFA">
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/dvdLogo"
+        android:layout_width="92dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/dvd"
+        app:layout_constraintBottom_toTopOf="@id/space"
+        app:layout_constraintEnd_toStartOf="@id/title"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:gravity="center"
-        android:text="@string/app_name"
+        android:gravity="center|start"
+        android:paddingStart="4dp"
+        android:paddingLeft="4dp"
+        android:text="@string/settings_screen_title"
         android:textColor="#000000"
         android:textSize="@dimen/title_text_size"
         app:fontFamily="@font/nunito_bold"
         app:layout_constraintBottom_toTopOf="@+id/space"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/dvdLogo"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Space
@@ -46,8 +59,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:ellipsize="marquee"
-        android:singleLine="true"
         android:padding="16dp"
+        android:singleLine="true"
         android:text="@string/movement_speed_title"
         android:textColor="#424242"
         app:fontFamily="@font/nunito"
@@ -67,6 +80,7 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/selector_selected_option"
             android:gravity="center"
@@ -82,6 +96,7 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/selector_selected_option"
             android:gravity="center"
@@ -97,6 +112,7 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/selector_selected_option"
             android:gravity="center"
@@ -112,6 +128,7 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
             android:background="@drawable/selector_selected_option"
             android:gravity="center"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <dimen name="title_text_size">38sp</dimen>
+    <dimen name="title_text_size">25sp</dimen>
 
     <dimen name="selected_option_corner_radius">8dp</dimen>
 

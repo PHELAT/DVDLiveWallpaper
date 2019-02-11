@@ -2,6 +2,8 @@
 
     <string name="app_name">DVD LiveWallpaper</string>
 
+    <string name="settings_screen_title">LiveWallpaper</string>
+
     <string name="movement_speed_title">Movement Speed</string>
     <string name="movement_speed_one">1</string>
     <string name="movement_speed_two">2</string>
