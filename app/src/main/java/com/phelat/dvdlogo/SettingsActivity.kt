@@ -15,7 +15,7 @@ class SettingsActivity : AppCompatActivity() {
 
         val movementSpeedOptions = resources.getStringArray(R.array.movement_speed_options)
 
-        val savedSpeed = sharedPreference.getInt("MovementSpeed", 32)
+        val savedSpeed = sharedPreference.getInt(MOVEMENT_SPEED_OPTION, 32)
         when (savedSpeed) {
             movementSpeedOptions[0].toInt() -> movementSpeedOption0.isSelected = true
             movementSpeedOptions[1].toInt() -> movementSpeedOption1.isSelected = true
@@ -29,7 +29,7 @@ class SettingsActivity : AppCompatActivity() {
                 movementSpeedOption1.isSelected = false
                 movementSpeedOption2.isSelected = false
                 sharedPreference.edit()
-                    .putInt("MovementSpeed", movementSpeedOptions[0].toInt())
+                    .putInt(MOVEMENT_SPEED_OPTION, movementSpeedOptions[0].toInt())
                     .apply()
             }
         }
@@ -40,7 +40,7 @@ class SettingsActivity : AppCompatActivity() {
                 movementSpeedOption0.isSelected = false
                 movementSpeedOption2.isSelected = false
                 sharedPreference.edit()
-                    .putInt("MovementSpeed", movementSpeedOptions[1].toInt())
+                    .putInt(MOVEMENT_SPEED_OPTION, movementSpeedOptions[1].toInt())
                     .apply()
             }
         }
@@ -51,10 +51,14 @@ class SettingsActivity : AppCompatActivity() {
                 movementSpeedOption0.isSelected = false
                 movementSpeedOption1.isSelected = false
                 sharedPreference.edit()
-                    .putInt("MovementSpeed", movementSpeedOptions[2].toInt())
+                    .putInt(MOVEMENT_SPEED_OPTION, movementSpeedOptions[2].toInt())
                     .apply()
             }
         }
+    }
+
+    companion object {
+        const val MOVEMENT_SPEED_OPTION = "MovementSpeed"
     }
 
 }
