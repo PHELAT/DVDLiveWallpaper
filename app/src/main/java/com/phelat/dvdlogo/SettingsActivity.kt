@@ -25,9 +25,7 @@ class SettingsActivity : AppCompatActivity() {
                 isSelected = true
                 movementSpeedOption1.isSelected = false
                 movementSpeedOption2.isSelected = false
-                sharedPreference.edit()
-                    .putInt(MOVEMENT_SPEED_OPTION, movementSpeedOptions[0].toInt())
-                    .apply()
+                setMovementSpeed(movementSpeedOptions[0].toInt())
             }
         }
         movementSpeedOption1.apply {
@@ -36,9 +34,7 @@ class SettingsActivity : AppCompatActivity() {
                 isSelected = true
                 movementSpeedOption0.isSelected = false
                 movementSpeedOption2.isSelected = false
-                sharedPreference.edit()
-                    .putInt(MOVEMENT_SPEED_OPTION, movementSpeedOptions[1].toInt())
-                    .apply()
+                setMovementSpeed(movementSpeedOptions[1].toInt())
             }
         }
         movementSpeedOption2.apply {
@@ -47,9 +43,7 @@ class SettingsActivity : AppCompatActivity() {
                 isSelected = true
                 movementSpeedOption0.isSelected = false
                 movementSpeedOption1.isSelected = false
-                sharedPreference.edit()
-                    .putInt(MOVEMENT_SPEED_OPTION, movementSpeedOptions[2].toInt())
-                    .apply()
+                setMovementSpeed(movementSpeedOptions[2].toInt())
             }
         }
     }
@@ -61,6 +55,12 @@ class SettingsActivity : AppCompatActivity() {
             movementSpeedOptions[1].toInt() -> movementSpeedOption1.isSelected = true
             movementSpeedOptions[2].toInt() -> movementSpeedOption2.isSelected = true
         }
+    }
+
+    private fun setMovementSpeed(speed: Int) {
+        sharedPreference.edit()
+            .putInt(MOVEMENT_SPEED_OPTION, speed)
+            .apply()
     }
 
     companion object {
